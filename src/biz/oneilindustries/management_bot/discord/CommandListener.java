@@ -66,6 +66,7 @@ public class CommandListener extends ListenerAdapter {
 
         //Updates SQL record for user
         user.getUserNames().setDiscordName(messageReceived.getAuthor().getName());
+        user.getUserNames().setDiscordUID(messageReceived.getAuthor().getId());
         user.setStatus("Registered");
         userDAO.saveUser(user);
 
@@ -110,6 +111,15 @@ public class CommandListener extends ListenerAdapter {
         //Ensures the command parameters are there
         if (commands.length < 3) {
             messageReceived.getChannel().sendMessage("Usage: !adduser steamid zarp/oneil/normal").queue();
+        }
+
+        String enteredSteamID = commands[1];
+
+        User checkIfUserExists = userDAO.getUser(enteredSteamID);
+
+        if (checkIfUserExists != null) {
+            messageReceived.getChannel().sendMessage("This user already exists").queue();
+            return;
         }
 
         //Creating the new user object and relevant objects

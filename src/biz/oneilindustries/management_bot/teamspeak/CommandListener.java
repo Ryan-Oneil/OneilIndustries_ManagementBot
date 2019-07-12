@@ -76,6 +76,7 @@ public class CommandListener extends TS3EventAdapter {
         }
 
         user.getUserNames().setTeamspeakName(message.getInvokerName());
+        user.getUserNames().setTeamspeakUID(message.getInvokerUniqueId());
         user.setStatus("Registered");
 
         userDAO.saveUser(user);
@@ -108,9 +109,18 @@ public class CommandListener extends TS3EventAdapter {
             return;
         }
 
+        String enteredSteamID = commands[1];
+
+        User checkIfUserExists = userDAO.getUser(enteredSteamID);
+
+        if (checkIfUserExists != null) {
+            api.sendChannelMessage("This user already exists");
+            return;
+        }
+
         //Creating the new user object and relevant objects
         UserRoles userRoles1 = new UserRoles(commands[2]);
-        User user = new User(commands[1],message.getInvokerName(),"Not Registered", new UserNames());
+        User user = new User(enteredSteamID,message.getInvokerName(),"Not Registered", new UserNames());
         user.addUserRole(userRoles1);
         userRoles1.setUserID(user);
 

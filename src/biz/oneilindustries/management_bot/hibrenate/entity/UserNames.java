@@ -17,9 +17,17 @@ public class UserNames {
     @Column(name = "teamspeak_name")
     private String teamspeakName;
 
-    public UserNames(String discordName, String teamspeakName) {
+    @Column(name = "teamspeak_uid")
+    private String teamspeakUID;
+
+    @Column(name = "discord_uid")
+    private String discordUID;
+
+    public UserNames(String discordName, String teamspeakName, String teamspeakUID, String discordUID) {
         this.discordName = discordName;
         this.teamspeakName = teamspeakName;
+        this.teamspeakUID = teamspeakUID;
+        this.discordUID = discordUID;
     }
 
     public UserNames() {
@@ -49,12 +57,30 @@ public class UserNames {
         this.teamspeakName = teamspeakName;
     }
 
+    public String getTeamspeakUID() {
+        return teamspeakUID;
+    }
+
+    public void setTeamspeakUID(String teamspeakUID) {
+        this.teamspeakUID = teamspeakUID;
+    }
+
+    public String getDiscordUID() {
+        return discordUID;
+    }
+
+    public void setDiscordUID(String discordUID) {
+        this.discordUID = discordUID;
+    }
+
     @Override
     public String toString() {
         return "UserNames{" +
                 "id=" + id +
                 ", discordName='" + discordName + '\'' +
                 ", teamspeakName='" + teamspeakName + '\'' +
+                ", teamspeakUID='" + teamspeakUID + '\'' +
+                ", discordUID='" + discordUID + '\'' +
                 '}';
     }
 }
