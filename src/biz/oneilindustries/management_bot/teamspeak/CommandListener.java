@@ -18,6 +18,7 @@ public class CommandListener extends TS3EventAdapter {
 
     private static final String USER_COMMANDS = "!register steamid  : Used to register your account on Oneil Industries";
     private static final String OFFICER_COMMANDS = "!adduser steamid role(zarp/oneil/normal)";
+    private static final String STEAM_ID_REGEX = "^STEAM_[0-5]:[01]:\\d+$";
 
     private UserDAO userDAO;
 
@@ -61,6 +62,11 @@ public class CommandListener extends TS3EventAdapter {
         }
 
         String enteredSteamID = commands[1];
+
+        if (!enteredSteamID.matches(STEAM_ID_REGEX)) {
+            api.sendChannelMessage("Not a valid steamID");
+            return;
+        }
 
         userDAO = new UserDAOImpl();
         User user = userDAO.getUser(enteredSteamID);
@@ -110,6 +116,11 @@ public class CommandListener extends TS3EventAdapter {
         }
 
         String enteredSteamID = commands[1];
+
+        if (!enteredSteamID.matches(STEAM_ID_REGEX)) {
+            api.sendChannelMessage("Not a valid steamID");
+            return;
+        }
 
         User checkIfUserExists = userDAO.getUser(enteredSteamID);
 

@@ -17,6 +17,7 @@ public class CommandListener extends ListenerAdapter {
 
     private static final String USER_COMMANDS = "!register steamid  : Used to register your account on Oneil Industries";
     private static final String OFFICER_COMMANDS = "!adduser steamid role(zarp/oneil/normal)";
+    private static final String STEAM_ID_REGEX = "^STEAM_[0-5]:[01]:\\d+$";
     private UserDAO userDAO;
 
     @Override
@@ -48,6 +49,11 @@ public class CommandListener extends ListenerAdapter {
         }
 
         String enteredSteamID = commands[1];
+
+        if (!enteredSteamID.matches(STEAM_ID_REGEX)) {
+            messageReceived.getChannel().sendMessage("Not a valid steamID").queue();
+            return;
+        }
 
         userDAO = new UserDAOImpl();
         User user = userDAO.getUser(enteredSteamID);
@@ -114,6 +120,11 @@ public class CommandListener extends ListenerAdapter {
         }
 
         String enteredSteamID = commands[1];
+
+        if (!enteredSteamID.matches(STEAM_ID_REGEX)) {
+            messageReceived.getChannel().sendMessage("Not a valid steamID").queue();
+            return;
+        }
 
         User checkIfUserExists = userDAO.getUser(enteredSteamID);
 
