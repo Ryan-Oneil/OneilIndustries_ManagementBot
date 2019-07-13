@@ -7,25 +7,20 @@ import com.github.theholywaffle.teamspeak3.api.event.TS3EventType;
 
 public class TSBot {
 
-    private String tsUsername;
-    private String tsPassword;
-    private String tsIPAddress;
+    private static TS3Api api;
 
-    public TSBot(String tsUsername, String tsPassword, String tsIPAddress) {
-        this.tsUsername = tsUsername;
-        this.tsPassword = tsPassword;
-        this.tsIPAddress = tsIPAddress;
+    private TSBot() {
     }
 
-    public void start() {
+    public static void start(String tsUsername, String tsPassword, String tsIPAddress) {
         final TS3Config config = new TS3Config();
-        config.setHost(this.tsIPAddress);
+        config.setHost(tsIPAddress);
 
         final TS3Query query = new TS3Query(config);
         query.connect();
 
-        final TS3Api api = query.getApi();
-        api.login(this.tsUsername, this.tsPassword);
+        api = query.getApi();
+        api.login(tsUsername, tsPassword);
         api.selectVirtualServerById(1);
         api.setNickname("Oneil Management Bot");
 
@@ -37,4 +32,7 @@ public class TSBot {
         api.addTS3Listeners(new CommandListener(api));
     }
 
+    public static TS3Api getApi() {
+        return api;
+    }
 }

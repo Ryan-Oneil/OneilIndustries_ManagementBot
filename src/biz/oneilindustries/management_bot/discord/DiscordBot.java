@@ -2,23 +2,27 @@ package biz.oneilindustries.management_bot.discord;
 
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.managers.GuildController;
 
 import javax.security.auth.login.LoginException;
 
 public class DiscordBot {
 
-    private String botToken;
+    private static JDA jda;
 
-    public DiscordBot(String botToken) {
-        this.botToken = botToken;
+    private DiscordBot() {
     }
 
-    public void start() {
+    public static void start(String botToken) {
         try {
-            JDA jda = new JDABuilder(botToken).build();
+            jda = new JDABuilder(botToken).build();
             jda.addEventListener(new CommandListener());
         } catch (LoginException e) {
             e.printStackTrace();
         }
+    }
+
+    public static GuildController getGuildController() {
+        return jda.getGuildById("367725161052372993").getController();
     }
 }
