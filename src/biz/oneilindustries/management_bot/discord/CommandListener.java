@@ -45,6 +45,7 @@ public class CommandListener extends ListenerAdapter {
     }
 
     private void registerUser(Message messageReceived) {
+
         String commandContent = messageReceived.getContentRaw();
         String[] commands = commandContent.split(" ");
 
@@ -56,7 +57,7 @@ public class CommandListener extends ListenerAdapter {
 
         String enteredSteamID = commands[1];
 
-        if (verifySteamID(messageReceived, enteredSteamID)) return;
+        if (!verifySteamID(messageReceived, enteredSteamID)) return;
 
         userDAO = new UserDAOImpl();
         User user = userDAO.getUser(enteredSteamID);
@@ -75,7 +76,6 @@ public class CommandListener extends ListenerAdapter {
         user.getUserNames().setDiscordUID(messageReceived.getAuthor().getId());
         user.setStatus("Registered");
         userDAO.saveUser(user);
-
 
         //Adds relevant roles to the user on discord
         DiscordManager discordManager = new DiscordManager(messageReceived.getGuild().getController());
@@ -105,7 +105,7 @@ public class CommandListener extends ListenerAdapter {
         userDAO = new UserDAOImpl();
 
         //Ensures the user is allowed to use the command
-        if (checkIfAuthorised(messageReceived)) return;
+        if (!checkIfAuthorised(messageReceived)) return;
 
         String commandContent = messageReceived.getContentRaw();
 
@@ -114,11 +114,12 @@ public class CommandListener extends ListenerAdapter {
         //Ensures the command parameters are there
         if (commands.length < 3) {
             messageReceived.getChannel().sendMessage("Usage: !adduser steamid zarp/oneil/normal").queue();
+            return;
         }
 
         String enteredSteamID = commands[1];
 
-        if (verifySteamID(messageReceived, enteredSteamID)) return;
+        if (!verifySteamID(messageReceived, enteredSteamID)) return;
 
         User checkIfUserExists = userDAO.getUser(enteredSteamID);
 
@@ -136,11 +137,13 @@ public class CommandListener extends ListenerAdapter {
         //Saves the user to sql
         userDAO.saveUser(user);
         userDAO.close();
+
+        messageReceived.getChannel().sendMessage("User has been added to Oneil Indsutries").queue();
     }
 
     private void removeUser(Message messageReceived) {
         //Ensures the user is allowed to use the command
-        if (checkIfAuthorised(messageReceived)) return;
+        if (!checkIfAuthorised(messageReceived)) return;
 
         String commandContent = messageReceived.getContentRaw();
         String[] commands = commandContent.split(" ");
@@ -156,7 +159,7 @@ public class CommandListener extends ListenerAdapter {
         String enteredSteamID = commands[1];
 
         //Verifies a correct steamID was provided
-        if (verifySteamID(messageReceived, enteredSteamID)) return;
+        if (!verifySteamID(messageReceived, enteredSteamID)) return;
 
         User user = userDAO.getUser(enteredSteamID);
 
@@ -187,8 +190,7 @@ public class CommandListener extends ListenerAdapter {
         messageReceived.getChannel().sendMessage("User has been removed from oneil industries").queue();
 
         //Update sql database
-        userDAO.deleteUser(user.getId());
-        userDAO.close();
+        userDAO.deleteUser(user);
     }
 
     //Method that verifies steamid through regex

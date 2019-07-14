@@ -9,6 +9,6 @@ public interface UserDAO {
     List<User> getUsers();
     User getUser(String steamID);
     void saveUser(User user);
-    void deleteUser(int id);
+    void deleteUser(User user);
     void close();
 }

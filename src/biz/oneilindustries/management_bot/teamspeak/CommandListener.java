@@ -70,7 +70,7 @@ public class CommandListener extends TS3EventAdapter {
         String enteredSteamID = commands[1];
 
         //Verifies a correct steamID was provided
-        if (verifySteamID(enteredSteamID)) return;
+        if (!verifySteamID(enteredSteamID)) return;
 
         userDAO = new UserDAOImpl();
         User user = userDAO.getUser(enteredSteamID);
@@ -106,7 +106,7 @@ public class CommandListener extends TS3EventAdapter {
 
     private void addUser(TextMessageEvent message) {
 
-        if (checkIfAuthorised(message)) return;
+        if (!checkIfAuthorised(message)) return;
 
         String[] commands = message.getMessage().split(" ");
 
@@ -119,14 +119,14 @@ public class CommandListener extends TS3EventAdapter {
         String enteredSteamID = commands[1];
 
         //Verifies a correct steamID was provided
-        if (verifySteamID(enteredSteamID)) return;
+        if (!verifySteamID(enteredSteamID)) return;
 
         userDAO = new UserDAOImpl();
 
         User checkIfUserExists = userDAO.getUser(enteredSteamID);
 
         //Checks if the user exists
-        if (verifyMembership(checkIfUserExists)) return;
+        if (!verifyMembership(checkIfUserExists)) return;
 
         //Creating the new user object and relevant objects
         UserRoles userRoles1 = new UserRoles(commands[2]);
@@ -141,7 +141,7 @@ public class CommandListener extends TS3EventAdapter {
 
     private void removeUser(TextMessageEvent message) {
 
-        if (checkIfAuthorised(message)) return;
+        if (!checkIfAuthorised(message)) return;
 
         String[] commands = message.getMessage().split(" ");
 
@@ -154,7 +154,7 @@ public class CommandListener extends TS3EventAdapter {
         String enteredSteamID = commands[1];
 
         //Verifies a correct steamID was provided
-        if (verifySteamID(enteredSteamID)) return;
+        if (!verifySteamID(enteredSteamID)) return;
 
         userDAO = new UserDAOImpl();
 
@@ -188,8 +188,7 @@ public class CommandListener extends TS3EventAdapter {
         api.sendChannelMessage("User has been removed from oneil industries");
 
         //Update sql database
-        userDAO.deleteUser(user.getId());
-        userDAO.close();
+        userDAO.deleteUser(user);
     }
 
     //Method that verifies steamid through regex

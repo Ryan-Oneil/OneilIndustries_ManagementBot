@@ -52,12 +52,14 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void deleteUser(int id) {
+    public void deleteUser(User user) {
+        openSession();
 
-        Query query = session.createQuery("delete from users where id=:id");
-        query.executeUpdate();
+        transaction = session.beginTransaction();
 
-        close();
+        session.delete(user);
+
+        commit();
     }
 
     private void commit() {
