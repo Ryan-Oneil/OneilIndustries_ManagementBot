@@ -121,6 +121,13 @@ public class CommandListener extends TS3EventAdapter {
         //Verifies a correct steamID was provided
         if (!verifySteamID(enteredSteamID)) return;
 
+        String enteredRole = commands[2];
+
+        if (!Ranks.isApprovedRole(enteredRole)) {
+            api.sendChannelMessage("Non approved role. Refer to !help");
+            return;
+        }
+
         userDAO = new UserDAOImpl();
 
         User checkIfUserExists = userDAO.getUser(enteredSteamID);

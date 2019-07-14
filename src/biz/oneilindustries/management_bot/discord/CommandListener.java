@@ -102,8 +102,6 @@ public class CommandListener extends ListenerAdapter {
 
     private void addNewUser(Message messageReceived) {
 
-        userDAO = new UserDAOImpl();
-
         //Ensures the user is allowed to use the command
         if (!checkIfAuthorised(messageReceived)) return;
 
@@ -121,6 +119,15 @@ public class CommandListener extends ListenerAdapter {
 
         if (!verifySteamID(messageReceived, enteredSteamID)) return;
 
+        String enteredRole = commands[2];
+
+        if (!Ranks.isApprovedRole(enteredRole)) {
+            messageReceived.getChannel().sendMessage("Non approved role. Refer to !help").queue();
+            return;
+        }
+
+        userDAO = new UserDAOImpl();
+
         User checkIfUserExists = userDAO.getUser(enteredSteamID);
 
         if (checkIfUserExists != null) {
@@ -129,7 +136,7 @@ public class CommandListener extends ListenerAdapter {
         }
 
         //Creating the new user object and relevant objects
-        UserRoles userRoles1 = new UserRoles(commands[2]);
+        UserRoles userRoles1 = new UserRoles(enteredRole);
         User user = new User(commands[1],messageReceived.getMember().getUser().getName(),"Not Registered", new UserNames());
         user.addUserRole(userRoles1);
         userRoles1.setUserID(user);

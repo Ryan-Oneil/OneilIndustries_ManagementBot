@@ -35,4 +35,8 @@ public class Ranks {
         }
         return null;
     }
+
+    public static boolean isApprovedRole(String roleName) {
+        return approvedRoles.contains(roleName);
+    }
 }
