@@ -10,5 +10,6 @@ public interface UserDAO {
     User getUser(String steamID);
     void saveUser(User user);
     void deleteUser(User user);
+    boolean checkIfUUIDExists(String uuid);
     void close();
 }

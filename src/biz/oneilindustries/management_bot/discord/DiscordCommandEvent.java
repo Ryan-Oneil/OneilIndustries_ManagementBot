@@ -18,7 +18,7 @@ public class DiscordCommandEvent {
     }
 
     public void processEvent() {
-        String[] commandDetails = message.getMessage().getContentRaw().split(" ");
+        String[] commandDetails = message.getMessage().getContentRaw().split(" +");
 
         //Create the command manager object to determine if the command entered is defined
         CommandManager commandManager = new CommandManager();

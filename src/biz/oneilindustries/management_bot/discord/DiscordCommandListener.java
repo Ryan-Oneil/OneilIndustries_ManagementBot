@@ -3,7 +3,7 @@ package biz.oneilindustries.management_bot.discord;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-public class CommandListener extends ListenerAdapter {
+public class DiscordCommandListener extends ListenerAdapter {
 
     private static final String PREFIX = "!";
 

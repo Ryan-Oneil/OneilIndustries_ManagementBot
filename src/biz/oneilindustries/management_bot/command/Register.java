@@ -31,6 +31,10 @@ public class Register extends Command {
         //Checks if the user is authorised to register
         if (user == null) return "Not a member of Oneil Industries";
 
+        if (!userDAO.checkIfUUIDExists(userNameDetails[1])) {
+            return "This " + service + " account is already registered";
+        }
+
         //Checks to ensure the user isn't already registered
         if (service.equals("discord")) {
             if (user.getUserNames().getDiscordName() != null) {
@@ -54,12 +58,14 @@ public class Register extends Command {
     }
 
     public void discord(User user, String[] userDetails) {
+        //Sets the user's discord names and unique id to store in the database
         user.getUserNames().setDiscordName(userDetails[0]);
         user.getUserNames().setDiscordUID(userDetails[1]);
 
         //Adds relevant roles to the user on discord
         DiscordManager discordManager = new DiscordManager(DiscordBot.getGuildController());
 
+        //Adds each relevant role
         for (UserRoles userRoles: user.getUserRoles()) {
             discordManager.addUserRole(discordManager.getUsernameByID(userDetails[1]),userRoles.getRoleName());
         }

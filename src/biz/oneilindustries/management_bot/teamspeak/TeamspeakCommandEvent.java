@@ -22,7 +22,7 @@ public class TeamspeakCommandEvent {
     }
 
     public void processEvent() {
-        String[] commandDetails = message.getMessage().split(" ");
+        String[] commandDetails = message.getMessage().split(" +");
 
         //Create the command manager object to determine if the command entered is defined
         CommandManager commandManager = new CommandManager();

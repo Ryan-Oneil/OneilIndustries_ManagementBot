@@ -2,6 +2,7 @@ package biz.oneilindustries.management_bot.dao;
 
 import biz.oneilindustries.management_bot.hibrenate.HibernateConfig;
 import biz.oneilindustries.management_bot.hibrenate.entity.User;
+import biz.oneilindustries.management_bot.hibrenate.entity.UserNames;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -60,6 +61,20 @@ public class UserDAOImpl implements UserDAO {
         session.delete(user);
 
         commit();
+    }
+
+    @Override
+    public boolean checkIfUUIDExists(String uuid) {
+        openSession();
+
+        Query query= session.
+                createQuery("from UserNames where teamspeakUID=:teamspeakUID or discordUID=:discordUID");
+        query.setParameter("teamspeakUID", uuid);
+        query.setParameter("discordUID", uuid);
+
+        UserNames userNames = (UserNames) query.uniqueResult();
+
+        return userNames == null;
     }
 
     private void commit() {
