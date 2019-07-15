@@ -3,6 +3,7 @@ package biz.oneilindustries.management_bot.teamspeak;
 import biz.oneilindustries.management_bot.hibrenate.entity.User;
 import biz.oneilindustries.management_bot.ranks.Rank;
 import com.github.theholywaffle.teamspeak3.TS3Api;
+import com.github.theholywaffle.teamspeak3.api.exception.TS3CommandFailedException;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ServerGroup;
 
 import java.util.List;
@@ -27,7 +28,11 @@ public class TeamspeakManager {
         //Gets users client database ID
         int clientDatabaseID = getMemberDatabaseID(user.getUserNames().getTeamspeakUID());
 
-        api.removeClientFromServerGroup(serverGroup.getId(),clientDatabaseID);
+        try {
+            api.removeClientFromServerGroup(serverGroup.getId(), clientDatabaseID);
+        } catch (TS3CommandFailedException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getMemberDatabaseID(String clientID) {

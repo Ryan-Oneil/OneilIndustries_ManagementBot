@@ -1,6 +1,7 @@
 package biz.oneilindustries.management_bot.hibrenate.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "role")
@@ -56,5 +57,18 @@ public class UserRoles {
                 ", userID=" + userID +
                 ", roleName='" + roleName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserRoles userRoles = (UserRoles) o;
+        return getRoleName().equals(userRoles.getRoleName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getRoleName());
     }
 }

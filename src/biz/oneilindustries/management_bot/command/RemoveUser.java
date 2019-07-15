@@ -6,10 +6,15 @@ import biz.oneilindustries.management_bot.discord.DiscordBot;
 import biz.oneilindustries.management_bot.discord.DiscordManager;
 import biz.oneilindustries.management_bot.hibrenate.entity.User;
 import biz.oneilindustries.management_bot.hibrenate.entity.UserRoles;
+import biz.oneilindustries.management_bot.ranks.Rank;
 import biz.oneilindustries.management_bot.teamspeak.TSBot;
 import biz.oneilindustries.management_bot.teamspeak.TeamspeakManager;
 import com.github.theholywaffle.teamspeak3.TS3Api;
+import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.managers.GuildController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RemoveUser extends Command{
 
@@ -53,10 +58,12 @@ public class RemoveUser extends Command{
         if (guildController != null) {
             DiscordManager discordManager = new DiscordManager(DiscordBot.getGuildController().getGuild().getController());
 
-            //Removes all roles given
-            for (UserRoles userRoles : user.getUserRoles()) {
-                discordManager.removeUserRole(user, userRoles.getRoleName());
+            ///Adds each relevant role to list
+            List<Role> roles = new ArrayList<>();
+            for (UserRoles userRoles: user.getUserRoles()) {
+                roles.add(Rank.getRequiredDiscordRole(userRoles.getRoleName()));
             }
+            discordManager.removeUserRole(user,roles);
         }
     }
 

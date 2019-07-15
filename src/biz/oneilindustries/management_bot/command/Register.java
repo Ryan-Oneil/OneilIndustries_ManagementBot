@@ -6,8 +6,13 @@ import biz.oneilindustries.management_bot.discord.DiscordBot;
 import biz.oneilindustries.management_bot.discord.DiscordManager;
 import biz.oneilindustries.management_bot.hibrenate.entity.User;
 import biz.oneilindustries.management_bot.hibrenate.entity.UserRoles;
+import biz.oneilindustries.management_bot.ranks.Rank;
 import biz.oneilindustries.management_bot.teamspeak.TSBot;
 import biz.oneilindustries.management_bot.teamspeak.TeamspeakManager;
+import net.dv8tion.jda.core.entities.Role;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Register extends Command {
 
@@ -65,10 +70,13 @@ public class Register extends Command {
         //Adds relevant roles to the user on discord
         DiscordManager discordManager = new DiscordManager(DiscordBot.getGuildController());
 
-        //Adds each relevant role
+        //Adds each relevant role to list
+        List<Role> roles = new ArrayList<>();
         for (UserRoles userRoles: user.getUserRoles()) {
-            discordManager.addUserRole(discordManager.getUsernameByID(userDetails[1]),userRoles.getRoleName());
+            roles.add(Rank.getRequiredDiscordRole(userRoles.getRoleName()));
         }
+        //Calls the discord manager to update user's roles
+        discordManager.addUserRole(discordManager.getUsernameByID(userDetails[1]),roles);
     }
 
     public void teamspeak(User user, String[] userDetails) {
