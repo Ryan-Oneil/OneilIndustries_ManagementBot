@@ -26,4 +26,8 @@ public class DiscordBot {
     public static GuildController getGuildController() {
         return jda.getGuildById(GUILD_ID).getController();
     }
+
+    public static String getGuildId() {
+        return GUILD_ID;
+    }
 }

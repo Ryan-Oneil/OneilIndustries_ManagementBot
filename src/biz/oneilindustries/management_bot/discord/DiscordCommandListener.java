@@ -16,6 +16,10 @@ public class DiscordCommandListener extends ListenerAdapter {
 
         //Processes command given by user
         if (message.startsWith(PREFIX)) {
+            if (event.getGuild() == null || !event.getGuild().getId().equals(DiscordBot.getGuildId())) {
+                event.getChannel().sendMessage("Commands are not supported here!").queue();
+                return;
+            }
             new DiscordCommandEvent(event).processEvent();
         }
     }
