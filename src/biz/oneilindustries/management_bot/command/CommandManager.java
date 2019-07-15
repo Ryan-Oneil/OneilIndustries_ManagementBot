@@ -31,8 +31,10 @@ public class CommandManager {
 
         for (Command command : this.commands) {
             if (command.getRequiredRole().equals(role)) {
+                helpMessage.append(command.getName());
+                helpMessage.append(":\n\tDescription: ");
                 helpMessage.append(command.getHelp());
-                helpMessage.append(" :\n\t");
+                helpMessage.append("\n\tUsage: ");
                 helpMessage.append(command.getArgs());
                 helpMessage.append("\n");
             }

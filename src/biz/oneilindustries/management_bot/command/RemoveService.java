@@ -36,7 +36,7 @@ public class RemoveService extends Command{
         }else if (service.equalsIgnoreCase("teamspeak")) {
             errorMessage = removeFromTeamspeak(user);
         }else {
-            return "Unkown service entered. Refer to !help";
+            return "Unknown service entered. Refer to !help";
         }
         //Returns if the user never existed on the entered service
         if (errorMessage != null) {
