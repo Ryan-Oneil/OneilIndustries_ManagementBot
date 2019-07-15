@@ -12,6 +12,7 @@ public class CommandManager {
         commands.add(new AddUser());
         commands.add(new RemoveUser());
         commands.add(new Register());
+        commands.add(new RemoveService());
     }
 
     public Command isCommand(String name) {

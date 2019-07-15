@@ -14,9 +14,9 @@ import net.dv8tion.jda.core.managers.GuildController;
 public class RemoveUser extends Command{
 
     public RemoveUser() {
-        this.name = "!remove";
-        this.help = "Removes a users from Oneil Industries services";
-        this.args = "!remove steamid";
+        this.name = "!removeuser";
+        this.help = "Removes a users from all Oneil Industries services";
+        this.args = "!removeuser steamid";
         this.requiredRole = "officer";
         this.argsAmount = 1;
         this.requiresSteamID = true;
@@ -46,7 +46,7 @@ public class RemoveUser extends Command{
         return "User has been removed from oneil industries";
     }
 
-    private void removeFromDiscord(User user) {
+    protected void removeFromDiscord(User user) {
         //Adds relevant roles to the user on discord
         GuildController guildController = DiscordBot.getGuildController();
 
@@ -60,7 +60,7 @@ public class RemoveUser extends Command{
         }
     }
 
-    private void removeFromTeamspeak(User user) {
+    protected void removeFromTeamspeak(User user) {
         TS3Api ts3Api = TSBot.getApi();
         if (ts3Api != null) {
             TeamspeakManager teamspeakManager = new TeamspeakManager(ts3Api);
