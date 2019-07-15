@@ -29,7 +29,7 @@ public class TSBot {
         api.registerEvent(TS3EventType.TEXT_CHANNEL, 0);
 
         // Register the event listener
-        api.addTS3Listeners(new CommandListener(api));
+        api.addTS3Listeners(new TSCommandListener(api));
     }
 
     public static TS3Api getApi() {

@@ -9,6 +9,7 @@ import javax.security.auth.login.LoginException;
 public class DiscordBot {
 
     private static JDA jda;
+    private static final String GUILD_ID = "367725161052372993";
 
     private DiscordBot() {
     }
@@ -23,6 +24,6 @@ public class DiscordBot {
     }
 
     public static GuildController getGuildController() {
-        return jda.getGuildById("367725161052372993").getController();
+        return jda.getGuildById(GUILD_ID).getController();
     }
 }

@@ -1,6 +1,7 @@
 package biz.oneilindustries.management_bot.discord;
 
 import biz.oneilindustries.management_bot.hibrenate.entity.User;
+import biz.oneilindustries.management_bot.ranks.Rank;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.managers.GuildController;
@@ -14,10 +15,7 @@ public class DiscordManager {
     }
 
     public void addUserRole(Member member, String roleName) {
-
-        Ranks rank = new Ranks(guildController.getGuild().getRoles());
-
-        Role role = rank.getRequiredRole(roleName);
+        Role role = Rank.getRequiredDiscordRole(roleName);
 
         if (role == null) {
             return;
@@ -26,13 +24,10 @@ public class DiscordManager {
     }
 
     public void removeUserRole(User user, String roleName) {
-
         //Gets member object by user's unique id
         Member memberToRemoveRoles = getUsernameByID(user.getUserNames().getDiscordUID());
 
-        Ranks rank = new Ranks(guildController.getGuild().getRoles());
-
-        Role role = rank.getRequiredRole(roleName);
+        Role role = Rank.getRequiredDiscordRole(roleName);
 
         if (role == null) {
             return;
