@@ -37,12 +37,12 @@ public class RemoveUser extends Command{
         //Checks if the user exists
         if (user == null) return "Not a member of Oneil Industries";
 
-        if (user.getUserNames().getDiscordName() != null) {
+        if (user.getUserNames().getDiscordUID() != null) {
             removeFromDiscord(user);
         }
 
         //Teamspeak role removals if user has registered on teamspeak
-        if (user.getUserNames().getTeamspeakName() != null) {
+        if (user.getUserNames().getTeamspeakUID() != null) {
             removeFromTeamspeak(user);
         }
         //Update sql database
