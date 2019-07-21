@@ -18,7 +18,7 @@ public class Rank {
         //Defines what rank name is an officer
         officerRanks.add("ceo");
         officerRanks.add("coo");
-        officerRanks.add("maanger");
+        officerRanks.add("manager");
         officerRanks.add("server admin");
 
         //Defines what rank name can be given with the bot
